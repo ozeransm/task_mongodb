@@ -13,7 +13,6 @@ app.listen(3000, () => {
 })
 // const db = 'mongodb+srv://arysich:oBe3d0ukBZX2xOyC@cluster0.plp6laf.mongodb.net/?retryWrites=true&w=majority';
 const db = 'mongodb+srv://ozeransm:gQDN5u9JLD7ei86h@cluster0.mqtkp0k.mongodb.net/?retryWrites=true&w=majority';
-// mongodb+srv://ozeransm:<password>@cluster0.mqtkp0k.mongodb.net/
 
 mongoose
     .connect(db)
@@ -49,4 +48,24 @@ router.get('/getAll', async (req, res) => {
     catch (error) {
         res.status(500).json({ message: error.message })
     }
+})
+
+router.patch('/mutation', async (req, res)=>{
+    try{
+        const obj = {};
+        if (req.body.name){obj.name=req.body.name}
+        if (req.body.phone){obj.phone=req.body.phone}
+        if (req.body.email){obj.email=req.body.email}
+        if (req.body.comment){obj.comment=req.body.comment}
+
+        const data = await Model.updateOne({_id: req.body._id}, {$set: obj});
+                
+        console.log(data);
+    }
+    catch(err){
+        console.log("Error")
+    }
+
+
+    
 })

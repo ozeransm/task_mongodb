@@ -13,12 +13,14 @@ ul{
 .one {
     margin-left: 10px;
     display: flex;
+    
 }
 
 .two {
 
     width: 500px;
     border: 1px red solid;
+
 }
 .list{
     display: flex;
@@ -31,4 +33,14 @@ ul{
     width: 235px;
     border: 1px grey dotted;
 }
-
+ .modal {
+    position: absolute;
+    top:0;
+    left:0;
+    background-color: rgba(128, 128, 128, 0.739);
+    border: 1px green solid;
+    border-radius: 5px;
+ }
+input {
+    display: block;
+}

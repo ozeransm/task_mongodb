@@ -1,11 +1,62 @@
 const refs = {
+    modalForm: document.querySelector('.modal-form'),
+    modal: document.querySelector('.modal'),
     form: document.querySelector('.form'),
     list: document.querySelector('.list'),
-    // 
+    listDiv: document.querySelector('.two'),
+    
 }
-refs.form.addEventListener('submit', handlerBtn);
 const URL_GET = "http://127.0.0.1:3000/api/getAll";
 const URL_POST = "http://127.0.0.1:3000/api/question" 
+const URL_MUT = "http://127.0.0.1:3000/api/mutation"
+refs.form.addEventListener('submit', handlerBtn);
+refs.listDiv.addEventListener('click', handlerCard);
+let idCard = null;
+function handlerCard(evt){
+    evt.preventDefault();
+    if(evt.target.nodeName!=='A'){
+        return;
+    }
+    idCard = evt.target.getAttribute('id');
+    refs.modal.style.top = `${evt.clientY}px`;
+    refs.modal.style.left = `${evt.clientX}px`;
+    refs.modal.removeAttribute('hidden');
+    refs.modal.addEventListener('click', handlerBtnModal);
+    refs.modalForm.reset();
+}
+
+function handlerBtnModal(evt){
+    
+    if(evt.target.name==='checkbox'){
+       evt.target.toggleAttribute('checked');
+    }
+
+    if(evt.target.nodeName!=='BUTTON'){
+        return;
+    }
+    evt.preventDefault();
+    refs.modal.setAttribute('hidden','');
+    
+    const obj={};
+   const formData = new FormData(refs.modalForm);
+   for(const el of formData.entries()){
+    if(el[1]){
+        obj[el[0]] = el[1];
+    }
+    }
+    obj._id = idCard;
+    // console.log(obj);
+    if(obj.checkbox){
+        
+        createMut({method: "PATCH", body: JSON.stringify(obj), headers: {
+         "Content-Type": "application/json; charset=UTF-8",},});
+    }
+    createGet()
+    .then(markUp)
+    .catch(console.log);
+    console.log(obj);
+}
+
 function handlerBtn(evt){
    evt.preventDefault();
    const obj={};
@@ -31,10 +82,18 @@ function createPost(option){
     .then(console.log);
 }
 
+function createMut(option){
+    fetch(URL_MUT, option)
+    .then(res=>res.json())
+    .then(console.log);
+}
+
 function markUp(data){
     
-    refs.list.insertAdjacentHTML('beforeend',data.reduce((akk,{_id , name, phone, comment})=>akk+`<div class="list-div"><li>Id: ${_id}</li><li>Name: ${name}</li><li>Phone: ${phone}</li><li>Comment: ${comment}</li></div>`,''));
+    refs.list.insertAdjacentHTML('beforeend',data.reduce((akk,{_id , name, phone, email, comment})=>akk+`<div class="list-div"><li>Id: ${_id}</li><li>Name: ${name}</li><li>Phone: ${phone}</li><li>Email: ${email}</li><li>Comment: ${comment}</li><a id="${_id}" href="#">Edit</a></div>`,''));
+    
 }
 
 createGet()
-    .then(markUp);
+    .then(markUp)
+    .catch(console.log);
