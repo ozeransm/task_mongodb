@@ -59,13 +59,24 @@ router.patch('/mutation', async (req, res)=>{
         if (req.body.comment){obj.comment=req.body.comment}
 
         const data = await Model.updateOne({_id: req.body._id}, {$set: obj});
-                
+        res.status='Ok';
         console.log(data);
     }
     catch(err){
-        console.log("Error")
+        console.log(err)
     }
 
 
     
+})
+
+router.delete('/delete', async (req, res)=>{
+    try{
+        console.log({_id: req.body._id});
+        const data = await Model.deleteOne({_id: req.body._id});
+        console.log(data);
+    }
+    catch(err){
+        console.log(err)
+    }
 })

@@ -27,9 +27,15 @@
         <input type="text" name="phone">
         <input type="text" name="email">
         <textarea name="comment" cols="30" rows="10"></textarea>
-        <input type="checkbox" name="checkbox" id="chb" value="accept">
-        <label for="chb">Modify card</label>
-        <button type="submit">Submit</button>
+        <div class="modal-chb">
+            <input type="checkbox" name="checkbox" id="checkbox">
+            <label for="checkbox">Modify card</label>
+            <!-- <span>Modify card</span> -->
+        </div>
+        <div class="modal-btn">
+            <button type="submit">Submit</button>
+            <a href="#">Delete</a>
+        </div>
     </form>
     </div>
     <script type="module" src="./index.js"></script>

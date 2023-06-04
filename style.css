@@ -10,6 +10,9 @@ ul{
     padding: 10px;
     margin: 0;
 }
+a{
+    color: brown;
+}
 .one {
     margin-left: 10px;
     display: flex;
@@ -43,4 +46,11 @@ ul{
  }
 input {
     display: block;
+}
+.modal-btn{
+    display: flex;
+    gap: 20px;
+}
+.modal-chb{
+    display: flex;
 }
